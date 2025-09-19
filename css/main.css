@@ -7,7 +7,7 @@
   --color-accent-light: #FFE706; /* Dorado Claro/Brillo (ffe706) */
   --color-shimmer-start: #F5FF06; /* Brillo 1 (f5ff06) */
   --color-shimmer-end: #C5A603;   /* Brillo 2 (c5a603) */
-  --color-text-light: #f5f5f5; /* Texto claro para fondo oscuro */
+  --color-text-light: #f5f5f5; /* Texto claro para fondo oscuro (Blanco/Gris muy claro) */
   --color-text-dark: #272341; /* Mantenido para herencia, pero se usará el color oscuro del fondo */
 }
 
@@ -184,18 +184,36 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
     animation: hidden 1000ms linear forwards;
 }
 
-/* --- ESTILOS DE BOTONES (CTA) A DORADO Y NEGRO --- */
-.cta-btn{display:inline-block;position:relative;padding:.8rem 1.6rem;font-weight:bold;line-height:1;z-index:1;overflow:hidden;border-radius:3px;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}.cta-btn:hover{box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}@media(max-width: 37.5em){.cta-btn:hover{box-shadow:none}}.cta-btn::after{content:"";display:block;position:absolute;
-/* Nuevo gradiente para el after/background */
-background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);
-width:0px;height:100%;left:0;top:0;z-index:-1;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}@media(max-width: 37.5em){.cta-btn::after{width:0;height:0;background-image:none}}.cta-btn--hero{color:var(--color-secondary-gold);-webkit-text-fill-color:var(--color-secondary-gold);border:2px solid rgba(0,0,0,0);-o-border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image-slice:1}@supports((-webkit-background-clip: text) or (background-clip: text)) or (-webkit-background-clip: text){.cta-btn--hero{
-/* Usando el gradiente para el texto */
-background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);
--webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:rgba(0,0,0,0);color:rgba(0,0,0,0)}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.cta-btn--hero{color:var(--color-secondary-gold)}.cta-btn--hero:hover{color:var(--color-text-light)}}@media(max-width: 37.5em){.cta-btn--hero{background-image:none;border:2px solid var(--color-secondary-gold);box-shadow:none;-webkit-text-fill-color:var(--color-secondary-gold)}}.cta-btn--hero::after{height:410%;width:150%;transform:translate(-98%, -25%) rotate(45deg)}.cta-btn--hero:hover{
-/* FIX: El texto debe ser oscuro para ser legible sobre el fondo dorado */
--webkit-text-fill-color:var(--color-primary-dark);
-color:var(--color-primary-dark);
-text-decoration:none}@media(max-width: 37.5em){.cta-btn--hero:hover{-webkit-text-fill-color:var(--color-secondary-gold); color: var(--color-secondary-gold);}}.cta-btn--hero:hover::after{transform:translate(-9%, -25%) rotate(45deg)}.cta-btn--resume{border-radius:0;color:var(--color-text-light);border:2px solid var(--color-text-light)}.cta-btn--resume::after{background:var(--color-secondary-gold)}.cta-btn--resume:hover{color:var(--color-primary-dark);text-decoration:none;box-shadow:none}@media(max-width: 37.5em){.cta-btn--resume:hover{color:var(--color-text-light)}}.cta-btn--resume:hover::after{width:100%}.cta-btn--projects{box-shadow:inset 1px 1px 2px 2px rgba(0,0,0,.15),inset -2px -2px 2px rgba(255,255,255,.1);border:2px solid rgba(0,0,0,0)}@media(max-width: 37.5em){.cta-btn--projects{border:none;box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}}.cta-btn--projects::after{height:250%;width:130%}.cta-btn--projects::after{transform:translate(-98%, -30%) rotate(45deg)}.cta-btn--projects:hover{box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}.cta-btn--projects:hover::after{transform:translate(-12%, -30%) rotate(45deg)}
+/* --- ESTILOS DE BOTONES (CTA) - Uniforme (Amarillo/Negro -> Negro/Blanco) --- */
+.cta-btn {
+    display: inline-block;
+    position: relative;
+    padding: .8rem 1.6rem;
+    font-weight: bold;
+    line-height: 1;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: 3px;
+    transition: all cubic-bezier(0.19, 1, 0.22, 1) .4s;
+    text-decoration: none !important;
+    
+    /* ESTILO DEFAULT (Amarillo con texto Negro) */
+    background-color: var(--color-secondary-gold);
+    color: var(--color-primary-dark) !important; /* LÍNEA 153: Color de texto NEGRO por defecto */
+    border: 2px solid var(--color-secondary-gold);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra suave para levantar el botón */
+}
+
+.cta-btn:hover {
+    /* ESTILO HOVER (Negro con texto Blanco) */
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light) !important; /* Forzar texto blanco */
+    border: 2px solid var(--color-secondary-gold); /* Mantiene el borde dorado */
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Se eliminan todas las reglas cta-btn--hero, cta-btn--resume, cta-btn--projects para la uniformidad */
 
 /* --- FOOTER DORADO Y NEGRO --- */
 .footer{background-color:var(--color-primary-dark);padding:4.8rem 0}.footer__text{font-size:1.3rem;color:#b3b3b3}.footer__text a{font-size:1.3rem;color:#bfbfbf;transition:all .2s ease-in-out;display:inline-block}.footer__text a:hover,.footer__text a:active{color:var(--color-secondary-gold)}.footer hr{margin:1rem auto;border:0;width:50%;border-top:2px solid rgba(218, 171, 45,.2)}.social-links{display:flex;justify-content:center}.social-links a{font-size:3rem;display:flex;flex-direction:column;justify-content:center;color:var(--color-text-light);width:5rem;height:5rem;margin:1.6rem 1.6rem;transition:all ease .2s}.social-links a i{transition:all ease-in-out .2s}.social-links a:hover{transform:scale(1.1) translateY(-2px); color: var(--color-secondary-gold) !important;}.back-to-top i{color:var(--color-text-light);margin:1rem 0 1.6rem;transition:all 200ms ease}.back-to-top i:hover{transform:translateY(-2px)}
