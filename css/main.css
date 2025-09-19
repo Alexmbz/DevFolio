@@ -3,8 +3,10 @@
 /* --- VARIABLES DE COLOR (DORADO Y NEGRO PREMIUM) --- */
 :root {
   --color-primary-dark: #1C1C1C; /* Negro Principal (Eerie Black) */
-  --color-secondary-gold: #DAAB2D; /* Dorado Principal (American Gold) */
-  --color-accent-light: #FFE002; /* Dorado Claro/Brillo */
+  --color-secondary-gold: #FAD207; /* Dorado Principal (Vibrante - fad207) */
+  --color-accent-light: #FFE706; /* Dorado Claro/Brillo (ffe706) */
+  --color-shimmer-start: #F5FF06; /* Brillo 1 (f5ff06) */
+  --color-shimmer-end: #C5A603;   /* Brillo 2 (c5a603) */
   --color-text-light: #f5f5f5; /* Texto claro para fondo oscuro */
   --color-text-dark: #272341; /* Mantenido para herencia, pero se usará el color oscuro del fondo */
 }
@@ -27,7 +29,14 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
 .dark-blue-color{color:var(--color-secondary-gold)} /* Los títulos principales ahora son dorados */
 .dark-blue-text{color:var(--color-secondary-gold)} /* Uso de dark-blue-text para títulos de secciones */
 
-/* Efecto Gradiente Dorado para texto */
+/* Keyframes para el Efecto de Brillo/Shimmer (NUEVO) */
+@keyframes gold-shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Efecto Gradiente Dorado para texto con loop */
 .text-color-main{
   margin-left:1rem;
   color:var(--color-secondary-gold);
@@ -35,11 +44,14 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
 }
 @supports((-webkit-background-clip: text) or (background-clip: text)) or (-webkit-background-clip: text){
   .text-color-main{
-    background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);
+    /* Aplicando gradiente más complejo para el brillo */
+    background-image:linear-gradient(90deg, var(--color-shimmer-start), var(--color-secondary-gold), var(--color-shimmer-start), var(--color-secondary-gold));
+    background-size: 300% 100%; /* Tamaño para que la animación funcione */
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:rgba(0,0,0,0);
-    color:rgba(0,0,0,0)
+    color:rgba(0,0,0,0);
+    animation: gold-shimmer 4s linear infinite; /* Aplicar el loop de brillo */
   }
 }
 @media(max-width: 37.5em){
@@ -51,7 +63,7 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
   }
 }
 
-/* --- HEADER STICKY GLASEADO (Nuevo Bloque) --- */
+/* --- HEADER STICKY GLASEADO --- */
 .header{
     position: fixed;
     top: 0;
@@ -68,12 +80,90 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); 
 }
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding:0 3rem}@media(max-width: 37.5em){.nav{flex-direction:column;padding:0 2rem}}
+/* Base Nav (Desktop) */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:0 3rem}@media(max-width: 37.5em){.nav{padding:0 2rem}}
 .nav__title a{font-size:2.5rem; color: var(--color-text-light);}
-.nav__list{display:flex;align-items:center}@media(max-width: 37.5em){.nav__list{padding:1.5rem 0 1rem 0}}
-.nav__list-item{margin:0 1.5rem;list-style:none}@media(max-width: 37.5em){.nav__list-item{margin:0 1rem}}
+
+/* Desktop Nav List */
+.nav__list{display:flex;align-items:center}
+.nav__list-item{margin:0 1.5rem;list-style:none}
 .nav__list-link{color:var(--color-text-light);font-size:1.8rem;padding:0.2rem 0}
 .nav__list-link:hover{border-bottom:2px solid var(--color-secondary-gold); color: var(--color-secondary-gold) !important;}
+
+
+/* --- HAMBURGER MENU / MOBILE DROPDOWN STYLES --- */
+
+/* 1. Estilos del Botón de Toggle (Desktop: hidden) */
+.nav__toggle {
+    display: none; /* Ocultar por defecto en desktop */
+    background: none;
+    border: none;
+    font-size: 2.8rem;
+    color: var(--color-secondary-gold); /* Color del icono dorado */
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    z-index: 1000;
+    transition: color 0.3s ease-in-out;
+}
+.nav__toggle:hover { color: var(--color-accent-light); }
+
+
+/* 2. Media Query para Móviles (Breakpoint 37.5em = 600px) */
+@media (max-width: 37.5em) { 
+    /* Mostrar el botón de toggle */
+    .nav__toggle {
+        display: block;
+    }
+    
+    /* Fix: Asegurar que el título y el toggle estén en línea en móvil */
+    .nav{flex-direction:row;justify-content:space-between;padding:0 2rem;}
+
+    /* Ocultar la lista de navegación por defecto y convertirla en overlay */
+    .nav__list {
+        display: flex; /* Mantener flex para alinear items, pero ocultar con transform */
+        flex-direction: column;
+        
+        /* Dropdown/Overlay Styles (Pantalla completa) */
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--color-primary-dark);
+        z-index: 998;
+        padding-top: 8rem; 
+        text-align: center;
+        overflow-y: auto; 
+        
+        /* Ocultar menú fuera de la vista (Dropdown cerrado) */
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+    }
+    
+    /* Clase para mostrar el menú (Dropdown abierto) */
+    .nav__list.open {
+        transform: translateX(0); 
+    }
+    
+    /* Estilo de los elementos del menú */
+    .nav__list-item {
+        margin: 1.5rem 0;
+        list-style: none;
+    }
+    
+    .nav__list-link {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 2.2rem;
+    }
+    
+    .nav__list-link:hover {
+        border-bottom: 2px solid var(--color-secondary-gold);
+        color: var(--color-secondary-gold) !important;
+    }
+}
+
 
 /* Ajuste de Hero para el Header fijo */
 #hero {
@@ -95,7 +185,17 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
 }
 
 /* --- ESTILOS DE BOTONES (CTA) A DORADO Y NEGRO --- */
-.cta-btn{display:inline-block;position:relative;padding:.8rem 1.6rem;font-weight:bold;line-height:1;z-index:1;overflow:hidden;border-radius:3px;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}.cta-btn:hover{box-shadow:1.5px 1.5px 3px rgba(218, 171, 45,.4),-1px -1px 3px rgba(255,255,255,.1)}@media(max-width: 37.5em){.cta-btn:hover{box-shadow:none}}.cta-btn::after{content:"";display:block;position:absolute;background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);width:0px;height:100%;left:0;top:0;z-index:-1;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}@media(max-width: 37.5em){.cta-btn::after{width:0;height:0;background-image:none}}.cta-btn--hero{color:var(--color-secondary-gold);-webkit-text-fill-color:var(--color-secondary-gold);border:2px solid rgba(0,0,0,0);-o-border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image-slice:1}@supports((-webkit-background-clip: text) or (background-clip: text)) or (-webkit-background-clip: text){.cta-btn--hero{background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:rgba(0,0,0,0);color:rgba(0,0,0,0)}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.cta-btn--hero{color:var(--color-secondary-gold)}.cta-btn--hero:hover{color:var(--color-text-light)}}@media(max-width: 37.5em){.cta-btn--hero{background-image:none;border:2px solid var(--color-secondary-gold);box-shadow:none;-webkit-text-fill-color:var(--color-secondary-gold)}}.cta-btn--hero::after{height:410%;width:150%;transform:translate(-98%, -25%) rotate(45deg)}.cta-btn--hero:hover{-webkit-text-fill-color:var(--color-text-light);text-decoration:none}@media(max-width: 37.5em){.cta-btn--hero:hover{-webkit-text-fill-color:var(--color-secondary-gold)}}.cta-btn--hero:hover::after{transform:translate(-9%, -25%) rotate(45deg)}.cta-btn--resume{border-radius:0;color:var(--color-text-light);border:2px solid var(--color-text-light)}.cta-btn--resume::after{background:var(--color-secondary-gold)}.cta-btn--resume:hover{color:var(--color-primary-dark);text-decoration:none;box-shadow:none}@media(max-width: 37.5em){.cta-btn--resume:hover{color:var(--color-text-light)}}.cta-btn--resume:hover::after{width:100%}.cta-btn--projects{box-shadow:inset 1px 1px 2px 2px rgba(218, 171, 45,.15),inset -2px -2px 2px rgba(255,255,255,.1);border:2px solid rgba(0,0,0,0)}@media(max-width: 37.5em){.cta-btn--projects{border:none;box-shadow:1.5px 1.5px 3px rgba(218, 171, 45,.4),-1px -1px 3px rgba(255,255,255,.1)}}.cta-btn--projects::after{height:250%;width:130%}.cta-btn--projects::after{transform:translate(-98%, -30%) rotate(45deg)}.cta-btn--projects:hover{box-shadow:1.5px 1.5px 3px rgba(218, 171, 45,.4),-1px -1px 3px rgba(255,255,255,.1)}.cta-btn--projects:hover::after{transform:translate(-12%, -30%) rotate(45deg)}
+.cta-btn{display:inline-block;position:relative;padding:.8rem 1.6rem;font-weight:bold;line-height:1;z-index:1;overflow:hidden;border-radius:3px;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}.cta-btn:hover{box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}@media(max-width: 37.5em){.cta-btn:hover{box-shadow:none}}.cta-btn::after{content:"";display:block;position:absolute;
+/* Nuevo gradiente para el after/background */
+background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);
+width:0px;height:100%;left:0;top:0;z-index:-1;transition:all cubic-bezier(0.19, 1, 0.22, 1) .6s}@media(max-width: 37.5em){.cta-btn::after{width:0;height:0;background-image:none}}.cta-btn--hero{color:var(--color-secondary-gold);-webkit-text-fill-color:var(--color-secondary-gold);border:2px solid rgba(0,0,0,0);-o-border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);border-image-slice:1}@supports((-webkit-background-clip: text) or (background-clip: text)) or (-webkit-background-clip: text){.cta-btn--hero{
+/* Usando el gradiente para el texto */
+background-image:linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-secondary-gold) 100%);
+-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:rgba(0,0,0,0);color:rgba(0,0,0,0)}}@media screen and (-ms-high-contrast: active),screen and (-ms-high-contrast: none){.cta-btn--hero{color:var(--color-secondary-gold)}.cta-btn--hero:hover{color:var(--color-text-light)}}@media(max-width: 37.5em){.cta-btn--hero{background-image:none;border:2px solid var(--color-secondary-gold);box-shadow:none;-webkit-text-fill-color:var(--color-secondary-gold)}}.cta-btn--hero::after{height:410%;width:150%;transform:translate(-98%, -25%) rotate(45deg)}.cta-btn--hero:hover{
+/* FIX: El texto debe ser oscuro para ser legible sobre el fondo dorado */
+-webkit-text-fill-color:var(--color-primary-dark);
+color:var(--color-primary-dark);
+text-decoration:none}@media(max-width: 37.5em){.cta-btn--hero:hover{-webkit-text-fill-color:var(--color-secondary-gold); color: var(--color-secondary-gold);}}.cta-btn--hero:hover::after{transform:translate(-9%, -25%) rotate(45deg)}.cta-btn--resume{border-radius:0;color:var(--color-text-light);border:2px solid var(--color-text-light)}.cta-btn--resume::after{background:var(--color-secondary-gold)}.cta-btn--resume:hover{color:var(--color-primary-dark);text-decoration:none;box-shadow:none}@media(max-width: 37.5em){.cta-btn--resume:hover{color:var(--color-text-light)}}.cta-btn--resume:hover::after{width:100%}.cta-btn--projects{box-shadow:inset 1px 1px 2px 2px rgba(0,0,0,.15),inset -2px -2px 2px rgba(255,255,255,.1);border:2px solid rgba(0,0,0,0)}@media(max-width: 37.5em){.cta-btn--projects{border:none;box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}}.cta-btn--projects::after{height:250%;width:130%}.cta-btn--projects::after{transform:translate(-98%, -30%) rotate(45deg)}.cta-btn--projects:hover{box-shadow:1.5px 1.5px 3px rgba(0,0,0,.4),-1px -1px 3px rgba(255,255,255,.1)}.cta-btn--projects:hover::after{transform:translate(-12%, -30%) rotate(45deg)}
 
 /* --- FOOTER DORADO Y NEGRO --- */
 .footer{background-color:var(--color-primary-dark);padding:4.8rem 0}.footer__text{font-size:1.3rem;color:#b3b3b3}.footer__text a{font-size:1.3rem;color:#bfbfbf;transition:all .2s ease-in-out;display:inline-block}.footer__text a:hover,.footer__text a:active{color:var(--color-secondary-gold)}.footer hr{margin:1rem auto;border:0;width:50%;border-top:2px solid rgba(218, 171, 45,.2)}.social-links{display:flex;justify-content:center}.social-links a{font-size:3rem;display:flex;flex-direction:column;justify-content:center;color:var(--color-text-light);width:5rem;height:5rem;margin:1.6rem 1.6rem;transition:all ease .2s}.social-links a i{transition:all ease-in-out .2s}.social-links a:hover{transform:scale(1.1) translateY(-2px); color: var(--color-secondary-gold) !important;}.back-to-top i{color:var(--color-text-light);margin:1rem 0 1.6rem;transition:all 200ms ease}.back-to-top i:hover{transform:translateY(-2px)}
@@ -112,7 +212,27 @@ section{padding:5rem 0rem}@media(max-width: 37.5em){section{border:none;padding-
     clip-path:polygon(0 0, 100% 0, 100% 80%, 0 100%);
     padding-bottom:10%
 }
-@media(max-width: 75em){#about{height:100%;-webkit-clip-path:none;clip-path:none}}#about .about-wrapper{grid-template-columns:1fr 1fr}@media(max-width: 37.5em){#about .about-wrapper{padding-bottom:5rem;grid-template-columns:1fr}}#about .about-wrapper__image{display:flex;height:100%;align-items:center;justify-content:center}#about .about-wrapper__image img{max-width:350px;width:100%}@media(max-width: 75em){#about .about-wrapper__image{height:100%}}@media(max-width: 48em){#about .about-wrapper__image{padding-bottom:4rem}}#about .about-wrapper__info{display:flex;height:100%;justify-content:center;flex-direction:column;text-align:left}@media(max-width: 48em){#about .about-wrapper__info{align-items:center;text-align:center}}
+@media(max-width: 75em){#about{height:100%;-webkit-clip-path:none;clip-path:none}}
+#about .about-wrapper{grid-template-columns:1fr 1fr}@media(max-width: 37.5em){#about .about-wrapper{padding-bottom:5rem;grid-template-columns:1fr}}
+#about .about-wrapper__image{display:flex;height:100%;align-items:center;justify-content:center}
+#about .about-wrapper__image img{max-width:350px;width:100%}
+@media(max-width: 75em){#about .about-wrapper__image{height:100%}}
+@media(max-width: 48em){#about .about-wrapper__image{padding-bottom:4rem}}
+
+/* FIX: Ajuste de imagen en móvil (max-width: 37.5em / 600px) */
+@media(max-width: 37.5em){
+    #about .about-wrapper__image {
+        max-width: 90%; /* Limita el ancho del contenedor */
+        margin: 0 auto 3rem auto; /* Centra el contenedor y agrega margen abajo */
+        padding: 0;
+    }
+    #about .about-wrapper__image img {
+        max-width: 250px; /* Tamaño máximo más pequeño en pantallas móviles */
+        width: 100%; /* Asegura que la imagen se adapte al ancho del contenedor */
+        height: auto;
+    }
+}
+#about .about-wrapper__info{display:flex;height:100%;justify-content:center;flex-direction:column;text-align:left}@media(max-width: 48em){#about .about-wrapper__info{align-items:center;text-align:center}}
 
 /* CONTACT SECTION - Color de fondo negro */
 #contact{
@@ -163,17 +283,17 @@ section{padding:5rem 0rem}@media(max-width: 37.5em){section{border:none;padding-
     width: 15rem; 
     text-align: center;
     padding: 3rem 1.5rem;
-    border: 1px solid rgba(218, 171, 45, 0.2); 
+    border: 1px solid rgba(197, 166, 3, 0.2); /* Usando c5a603 con opacidad */
     border-radius: 12px;
     background-color: #262626; /* Negro un poco más claro que el fondo */
     transition: all 0.3s ease-in-out;
     cursor: default;
-    box-shadow: 0 0 5px rgba(218, 171, 45, 0.1);
+    box-shadow: 0 0 5px rgba(245, 255, 6, 0.1); /* Usando f5ff06 con opacidad */
 }
 
 .tech-icon-block:hover {
     transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(255, 224, 2, 0.5); /* Sombra de brillo dorado en hover */
+    box-shadow: 0 0 25px rgba(255, 231, 6, 0.5); /* Sombra de brillo dorado en hover (ffe706) */
     border-color: var(--color-secondary-gold);
 }
 

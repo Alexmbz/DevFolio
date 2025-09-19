@@ -44,7 +44,7 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglRRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
@@ -75,7 +75,12 @@
             <div class="nav__title">
                 <a href="#hero"><span class="text-color-main">&lt;</span>Alex<span class="text-color-main">/&gt;</span></a>
             </div>
-            <ul class="nav__list">
+            
+            <button class="nav__toggle" id="nav__toggle" aria-label="toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav__list" id="nav__list">
                 <li class="nav__list-item"><a class="nav__list-link" href="#about">Acerca</a></li>
                 <li class="nav__list-item"><a class="nav__list-link" href="#technologies">Tecnologías</a></li>
                 <li class="nav__list-item"><a class="nav__list-link" href="#projects">Proyectos</a></li>
@@ -119,7 +124,7 @@
               Utilizo un conjunto de herramientas potente para el análisis, la visualización y la automatización de datos, garantizando que las decisiones se basen en información precisa y oportuna.
             </p>
             <span class="about-wrapper__cta">
-              <a href="#" class="cta-btn cta-btn--resume">Ver Currículum</a>
+              <a href="./assets/resume.pdf" target="_blank" class="cta-btn cta-btn--resume">Ver Currículum</a>
             </span>
           </div>
         </div>
@@ -155,32 +160,29 @@
 
           <article class="row">
             <div class="project-wrapper__text">
-              <h3 class="project-wrapper__text-title">Project Title</h3>
+              <h3 class="project-wrapper__text-title">Finanzas Personales</h3>
               <p class="project-wrapper__text-info">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Deleniti voluptas, sit nam perspiciatis tempore aspernatur ullam
-                necessitatibus impedit repellendus vero sed ipsa eos beatae ab
-                sint saepe nostrum! Enim, perferendis.
+                En este proyecto desarrollé un análisis avanzado de finanzas que incluye una serie de visualizaciones interactivas y reportes dinámicos.
+
+Así como Modelado de Datos, Normalización y Limpieza. También desarrollé medidas DAX avanzadas para calcular métricas financieras clave y Columnas Calculadas con Powerquery.
               </p>
               <div class="project-wrapper__text-btns">
                 <a
-                  href="#"
+                  href="https://app.powerbi.com/view?r=eyJrIjoiZTY3MTNhZTEtMjMyMy00YzcyLTljOGMtYjA2M2Q3ZGI0Y2UwIiwidCI6ImY4ZTBiYzc2LTJmMDctNGNjMC05Njk3LTc5ZTI3YWRjMWM2ZiIsImMiOjR9"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="cta-btn cta-btn--hero cta-btn--projects"
-                  >See Live</a
+                  >Ver Proyecto</a
                 >
-                <a href="#" target="_blank" class="cta-btn text-color-main"
-                  >Source Code</a
-                >
+                
               </div>
             </div>
 
             <div class="project-wrapper__image">
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.powerbi.com/view?r=eyJrIjoiZTY3MTNhZTEtMjMyMy00YzcyLTljOGMtYjA2M2Q3ZGI0Y2UwIiwidCI6ImY4ZTBiYzc2LTJmMDctNGNjMC05Njk3LTc5ZTI3YWRjMWM2ZiIsImMiOjR9" target="_blank" rel="noopener noreferrer">
                 <div class="thumbnail rounded">
                   <img
-                    src="./assets/project.png"
+                    src="./assets/Finanzas Personales 1.png"
                     class="img-fluid"
                     alt="Project Image"
                     width="1366"
@@ -207,9 +209,7 @@
                   class="cta-btn cta-btn--hero cta-btn--projects"
                   >See Live</a
                 >
-                <a href="#" target="_blank" class="cta-btn text-color-main"
-                  >Source Code</a
-                >
+                
               </div>
             </div>
 
@@ -321,6 +321,31 @@
     </footer>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear()
+
+      // SCRIPT PARA EL MENÚ HAMBURGUESA DROPDOWN
+      const navToggle = document.getElementById('nav__toggle');
+      const navList = document.getElementById('nav__list');
+      
+      if (navToggle && navList) {
+          navToggle.addEventListener('click', () => {
+              navList.classList.toggle('open');
+              // Cambiar el icono (hamburguesa <-> X)
+              const icon = navToggle.querySelector('i');
+              icon.classList.toggle('fa-bars');
+              icon.classList.toggle('fa-times');
+          });
+
+          // Cerrar el menú al hacer clic en un enlace
+          navList.querySelectorAll('a').forEach(link => {
+              link.addEventListener('click', () => {
+                  navList.classList.remove('open');
+                  // Asegurarse de que el ícono vuelva a ser la hamburguesa
+                  const icon = navToggle.querySelector('i');
+                  icon.classList.add('fa-bars');
+                  icon.classList.remove('fa-times');
+              });
+          });
+      }
     </script>
     <script src="./javascript/vanilla-tilt.min.js"></script>
     <script type="text/javascript" src="./javascript/valtilt.js"></script>
