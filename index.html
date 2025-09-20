@@ -271,7 +271,7 @@ Este reporte permite a los gerentes y al equipo de recursos humanos tomar decisi
               </div>
             </div>
             <div class="project-wrapper__image">
-              <a href="https://app.powerbi.com/view?r=eyJrIjoiZTcxM2NmMmItYThkNC00ZjcxLWFkNzAtN2IyMDlmZTVmZDM3IiwidCI6ImY4ZTBiYzc2LTJmMDctNGNjMC05Njk3LTc5ZTI3YWRjMWM2ZiIsImMiOjR9" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.powerbi.com/view?r=eyJrIjoiZTcxM2NmMmJiYThkNC00ZjcxLWFkNzAtN2IyMDlmZTVmZDM3IiwidCI6ImY4ZTBiYzc2LTJmMDctNGNjMC05Njk3LTc5ZTI3YWRjMWM2ZiIsImMiOjR9" target="_blank" rel="noopener noreferrer">
                 <div class="thumbnail rounded">
                   <img
                     src="assets/Indicadores Mundiales.png"
@@ -288,15 +288,52 @@ Este reporte permite a los gerentes y al equipo de recursos humanos tomar decisi
           </div>
       </div>
     </section>
+    
     <section id="contact">
-      <div class="container">
+    <div class="container">
         <h2 class="section-title fade-in-section">Contacto</h2>
         <div class="contact-wrapper fade-in-up">
-          <p class="contact-wrapper__text">¿Hablamos de tu próximo proyecto?</p>
-          <a href="#" class="cta-btn">¡Envíame un correo!</a>
+            <p class="contact-wrapper__text">¿Hablamos de tu próximo proyecto?</p>
+
+            <div class="contact-buttons-wrapper">
+                
+                <a 
+                    href="https://www.linkedin.com/in/alexb%C3%A1ez/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="cta-btn contact-btn-social"
+                >
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+                
+                <a 
+                    href="./assets/resume.pdf" 
+                    target="_blank" 
+                    class="cta-btn contact-btn-social"
+                >
+                    <i class="fas fa-download"></i> Currículum
+                </a>
+
+                <a 
+                    href="https://wa.link/yki135" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="cta-btn contact-btn-secondary"
+                >
+                    <i class="fas fa-phone"></i> Teléfono
+                </a>
+
+                <a 
+                    href="mailto:datalex2004@gmail.com" 
+                    class="cta-btn contact-btn-secondary"
+                >
+                    <i class="fas fa-envelope"></i> Correo
+                </a>
+
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
     <footer class="footer">
       <div class="container">
         <a href="#hero" class="back-to-top fade-in-up" aria-label="go back to top">
@@ -335,7 +372,7 @@ Este reporte permite a los gerentes y al equipo de recursos humanos tomar decisi
             href=""
             target="_blank"
             rel="noopener noreferrer"
-            >Alex Baez</a
+            >Alex Báez</a
           >. <br /> 
         </p>
       </div>
@@ -383,13 +420,16 @@ Este reporte permite a los gerentes y al equipo de recursos humanos tomar decisi
           });
       });
 
-      // HEADER SCROLL EFFECT
+      // HEADER SCROLL EFFECT (SOLO EN DESKTOP)
       window.addEventListener('scroll', () => {
-          const header = document.querySelector('.header');
-          if (window.scrollY > 100) {
-              header.classList.add('scrolled');
-          } else {
-              header.classList.remove('scrolled');
+          // Detectar si estamos en un ancho mayor a 600px (37.5em)
+          if (window.innerWidth > 600) { 
+              const header = document.querySelector('.header');
+              if (window.scrollY > 100) {
+                  header.classList.add('scrolled');
+              } else {
+                  header.classList.remove('scrolled');
+              }
           }
       });
 
