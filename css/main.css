@@ -315,11 +315,29 @@ section{padding:5rem 0rem}@media(max-width: 37.5em){section{border:none;padding-
     border-color: var(--color-secondary-gold);
 }
 
+/* CLASE DE ÍCONO (SVG/IMG) */
 .tech-icon {
-    font-size: 6rem;
-    color: var(--color-secondary-gold); 
+    /* AJUSTES DE TAMAÑO PARA IMAGEN */
+    width: 6rem;
+    height: 6rem;
+    
     margin-bottom: 1.5rem;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    
+    /* -------------------------------------- */
+    /* A J U S T E S   P A R A   S V G S      */
+    /* -------------------------------------- */
+    
+    /* APLICA SOMBRA DORADA (El color del SVG se mantendrá) */
+    -webkit-filter: drop-shadow(0 0 5px var(--color-secondary-gold));
+    filter: drop-shadow(0 0 5px var(--color-secondary-gold));
+}
+
+/* EFECTO HOVER: Aumenta la intensidad del brillo (sombra) */
+.tech-icon-block:hover .tech-icon {
+    /* Aumenta la intensidad de la sombra dorada al hacer hover */
+    -webkit-filter: drop-shadow(0 0 10px var(--color-accent-light));
+    filter: drop-shadow(0 0 10px var(--color-accent-light));
 }
 .tech-icon-block:hover .tech-icon {
     color: var(--color-accent-light); /* Dorado más brillante al pasar el ratón */
