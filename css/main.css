@@ -213,10 +213,63 @@ a:hover{transition:all .3s ease-in-out; color: var(--color-secondary-gold) !impo
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.7);
 }
 
-/* Se eliminan todas las reglas cta-btn--hero, cta-btn--resume, cta-btn--projects para la uniformidad */
+/* Botón flotante de volver arriba */
+.back-to-top {
+    position: fixed !important;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--color-secondary-gold);
+    color: var(--color-primary-dark) !important;
+    border: 2px solid var(--color-secondary-gold);
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: var(--color-primary-dark);
+    color: var(--color-text-light) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top i {
+    font-size: 2rem !important;
+    color: inherit !important;
+    margin: 0 !important;
+}
+
+@media(max-width: 37.5em) {
+    .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    
+    .back-to-top i {
+        font-size: 1.8rem !important;
+    }
+}
 
 /* --- FOOTER DORADO Y NEGRO --- */
-.footer{background-color:var(--color-primary-dark);padding:4.8rem 0}.footer__text{font-size:1.3rem;color:#b3b3b3}.footer__text a{font-size:1.3rem;color:#bfbfbf;transition:all .2s ease-in-out;display:inline-block}.footer__text a:hover,.footer__text a:active{color:var(--color-secondary-gold)}.footer hr{margin:1rem auto;border:0;width:50%;border-top:2px solid rgba(218, 171, 45,.2)}.social-links{display:flex;justify-content:center}.social-links a{font-size:3rem;display:flex;flex-direction:column;justify-content:center;color:var(--color-text-light);width:5rem;height:5rem;margin:1.6rem 1.6rem;transition:all ease .2s}.social-links a i{transition:all ease-in-out .2s}.social-links a:hover{transform:scale(1.1) translateY(-2px); color: var(--color-secondary-gold) !important;}.back-to-top i{color:var(--color-text-light);margin:1rem 0 1.6rem;transition:all 200ms ease}.back-to-top i:hover{transform:translateY(-2px)}
+.footer{background-color:var(--color-primary-dark);padding:4.8rem 0}.footer__text{font-size:1.3rem;color:#b3b3b3}.footer__text a{font-size:1.3rem;color:#bfbfbf;transition:all .2s ease-in-out;display:inline-block}.footer__text a:hover,.footer__text a:active{color:var(--color-secondary-gold)}.footer hr{margin:1rem auto;border:0;width:50%;border-top:2px solid rgba(218, 171, 45,.2)}.social-links{display:flex;justify-content:center}.social-links a{font-size:3rem;display:flex;flex-direction:column;justify-content:center;color:var(--color-text-light);width:5rem;height:5rem;margin:1.6rem 1.6rem;transition:all ease .2s}.social-links a i{transition:all ease-in-out .2s}.social-links a:hover{transform:scale(1.1) translateY(-2px); color: var(--color-secondary-gold) !important;}
 
 section{padding:5rem 0rem}@media(max-width: 37.5em){section{border:none;padding-left:1rem;padding-right:1rem}}section .row{display:grid;gap:2rem;grid-template-columns:1fr 2fr;grid-template-rows:1fr;padding:0 1.5rem}@media(max-width: 56.25em){section .row{grid-template-columns:1fr;grid-template-rows:auto}}@media(max-width: 37.5em){section .row{padding:0}}section .row p+p{margin-top:1rem}section .row span{margin-top:2rem}.container{width:100%;padding:0 1.5rem;margin:0 auto;max-width:1140px}@media(max-width: 75em){.container{max-width:960px;width:100%}}@media(max-width: 56.25em){.container{max-width:720px;width:100%;justify-content:center}}@media(max-width: 48em){.container{max-width:720px;width:100%}}@media(max-width: 37.5em){.container{max-width:540px;width:100%}}
 
@@ -404,4 +457,20 @@ section{padding:5rem 0rem}@media(max-width: 37.5em){section{border:none;padding-
 }
 @media(max-width: 37.5em){
     .tech-icon-block{ width: 45%; }
+}
+.back-to-top i {
+    font-size: 2rem !important;
+    color: inherit !important;
+    margin: 0 !important;
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover i {
+    transform: translateY(-2px);
+}
+
+@media(max-width: 37.5em) {
+    .back-to-top i {
+        font-size: 1.8rem !important;
+    }
 }
